@@ -8,10 +8,19 @@
 import UIKit
 
 class DailyFocusViewController: UITableViewController {
+    
+    // MARK: - Test data
+    
+    private var habitsList = Habit.getHabitsList()
+    private var pillsList = Pill.getPillsList()
+    private var tasksList = Task.getTasksList()
 
+    // MARK: - LifeCircle methods
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+//        tableView.rowHeight = 40
+        
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
@@ -22,24 +31,76 @@ class DailyFocusViewController: UITableViewController {
     // MARK: - Table view data source
 
     override func numberOfSections(in tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
-        return 0
+        return 3
+    }
+    
+    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        switch section {
+            case 0: "ПРИВЫЧКИ"
+            case 1: "ЛЕКАРСТВА"
+            default: "СПИСОК ДЕЛ"
+        }
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
-        return 0
+        switch section {
+            case 0: habitsList.count
+            case 1: pillsList.count
+            default: tasksList.count
+        }
     }
-
-    /*
+    
+    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
-
-        // Configure the cell...
-
-        return cell
+        
+        switch indexPath.section {
+            
+        case 0:
+            let habitCell = tableView.dequeueReusableCell(withIdentifier: "habit", for: indexPath) as? HabitTableViewCell
+            let habit = habitsList[indexPath.row]
+        
+            habitCell?.habitLabel.text = habit.habit.uppercased()
+            habitCell?.howOftenADayHabitLabel.text = habit.howManyTimesADay.formatted()
+            habitCell?.habitProgressView.progress = habit.progress / 100
+            
+            return (habitCell)!
+            
+        case 1:
+            let pillCell = tableView.dequeueReusableCell(withIdentifier: "pill", for: indexPath)
+            let pill = pillsList[indexPath.row]
+            var content = pillCell.defaultContentConfiguration()
+            
+            content.text = pill.pillName
+            content.textToSecondaryTextVerticalPadding = 5
+            content.secondaryText = pill.description
+            content.secondaryTextProperties.color = .systemGray
+            content.image = UIImage(named: pill.image)
+            content.imageProperties.maximumSize = CGSize(width: 30, height: 30)
+            pillCell.contentConfiguration = content
+        
+            return pillCell
+            
+        default:
+            let taskCell = tableView.dequeueReusableCell(withIdentifier: "task", for: indexPath)
+            let task = tasksList[indexPath.row]
+            var content = taskCell.defaultContentConfiguration()
+            
+            content.text = task.textOfTask
+            taskCell.contentConfiguration = content
+            
+            return taskCell
+            
+        }
     }
-    */
+    
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        switch indexPath.section {
+        case 0: 60
+        case 1: 50
+        default: 40
+        }
+    }
+
 
     /*
     // Override to support conditional editing of the table view.

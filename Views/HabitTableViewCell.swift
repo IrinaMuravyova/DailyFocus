@@ -9,9 +9,13 @@ import UIKit
 
 class HabitTableViewCell: UITableViewCell {
 
+    @IBOutlet var habitLabel: UILabel!
+    @IBOutlet var howOftenADayHabitLabel: UILabel!
+    @IBOutlet var habitProgressView: UIProgressView!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
+            
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
