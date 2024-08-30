@@ -36,9 +36,9 @@ class DailyFocusViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         switch section {
-            case 0: "ПРИВЫЧКИ"
-            case 1: "ЛЕКАРСТВА"
-            default: "СПИСОК ДЕЛ"
+            case 0: "Привычки".uppercased()
+            case 1: "Лекарства".uppercased()
+            default: "Список дел".uppercased()
         }
     }
 
