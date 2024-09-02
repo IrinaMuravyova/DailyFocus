@@ -12,6 +12,8 @@ class HabitTableViewCell: UITableViewCell {
     @IBOutlet var habitLabel: UILabel!
     @IBOutlet var howOftenADayHabitLabel: UILabel!
     @IBOutlet var habitProgressView: UIProgressView!
+    @IBOutlet var leftTimesLabel: UILabel!
+    @IBOutlet var DoneImage: UIImageView!
     
     override func awakeFromNib() {
         super.awakeFromNib()

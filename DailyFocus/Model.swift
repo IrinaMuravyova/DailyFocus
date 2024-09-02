@@ -10,12 +10,13 @@ struct Habit {
     let howManyDays: Int
     let howManyTimesADay: Int
     let progress: Float
+    let didIt: Bool
     
     static func getHabitsList() -> [Habit] {
         [
-            Habit(habit: "Заниматься английским", howManyDays: 365, howManyTimesADay: 1, progress: 10),
-            Habit(habit: "Делать тело", howManyDays: 90, howManyTimesADay: 1, progress: 1),
-            Habit(habit: "Читать", howManyDays: 100, howManyTimesADay: 1, progress: 70)
+            Habit(habit: "Заниматься английским", howManyDays: 365, howManyTimesADay: 1, progress: 10, didIt: false),
+            Habit(habit: "Делать тело", howManyDays: 90, howManyTimesADay: 1, progress: 1, didIt: false),
+            Habit(habit: "Читать", howManyDays: 100, howManyTimesADay: 1, progress: 70, didIt: false)
         ]
     }
 }
@@ -24,11 +25,11 @@ struct Pill {
     let type: PillsType
     let pillName: String
     let dose: Int?
-    let measureUnit: MeasureUnits?
+    let measureUnit: MeasureUnit?
     let howManyDoses: Int
     let howManyDays: Int
     let timesADay: Int
-    let wayToEat: WaysToEatPills
+    let wayToEat: WaysToEatPill
     let image: String
     var description: String {
         dose == nil
@@ -96,7 +97,7 @@ enum PillsType: String {
 }
 
 
-enum WaysToEatPills: String {
+enum WaysToEatPill: String {
     case onEmptyStomach = "натощак"
     case beforeEat = "до еды"
     case duringEat = "во время еды"
@@ -104,7 +105,7 @@ enum WaysToEatPills: String {
 }
 
 // TODO: дополнить список измерений, возможно есть какой-то стандартизованный справочник в инете
-enum MeasureUnits: String {
+enum MeasureUnit: String {
     case mcg = "мкг"
     case mg = "мг"
     case ml = "мл"

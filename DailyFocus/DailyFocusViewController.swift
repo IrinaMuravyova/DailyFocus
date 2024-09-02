@@ -58,10 +58,27 @@ class DailyFocusViewController: UITableViewController {
         case 0:
             let habitCell = tableView.dequeueReusableCell(withIdentifier: "habit", for: indexPath) as? HabitTableViewCell
             let habit = habitsList[indexPath.row]
-        
-            habitCell?.habitLabel.text = habit.habit.uppercased()
-            habitCell?.howOftenADayHabitLabel.text = habit.howManyTimesADay.formatted()
-            habitCell?.habitProgressView.progress = habit.progress / 100
+            if habit.didIt == false {
+                
+                habitCell!.leftTimesLabel.isHidden = true
+//                habitCell?.DoneImage.isHidden = true
+                
+                habitCell?.habitLabel.text = habit.habit.uppercased()
+                habitCell?.howOftenADayHabitLabel.text = habit.howManyTimesADay.formatted()
+                habitCell?.habitProgressView.progress = habit.progress / 100
+                
+            } else {
+                
+//                habitCell?.habitLabel.isHidden
+//                habitCell?.howOftenADayHabitLabel.isHidden
+//                habitCell?.habitProgressView.isHidden
+                
+//                habitCell?.habitLabel.text = habit.habit.uppercased()
+//                habitCell?.
+//                habitCell?.howOftenADayHabitLabel.text = habit.howManyTimesADay.formatted()
+                
+                
+            }
             
             return (habitCell)!
             
@@ -75,7 +92,7 @@ class DailyFocusViewController: UITableViewController {
             content.secondaryText = pill.description
             content.secondaryTextProperties.color = .systemGray
             content.image = UIImage(named: pill.image)
-            content.imageProperties.maximumSize = CGSize(width: 30, height: 30)
+            content.imageProperties.maximumSize = CGSize(width: 20, height: 20)
             pillCell.contentConfiguration = content
         
             return pillCell
@@ -84,7 +101,10 @@ class DailyFocusViewController: UITableViewController {
             let taskCell = tableView.dequeueReusableCell(withIdentifier: "task", for: indexPath)
             let task = tasksList[indexPath.row]
             var content = taskCell.defaultContentConfiguration()
-            
+    
+            content.image = UIImage(systemName: "circle")
+            content.imageProperties.tintColor = .systemGray2
+            content.image?.withTintColor(.gray)
             content.text = task.textOfTask
             taskCell.contentConfiguration = content
             
