@@ -6,22 +6,45 @@
 //
 
 struct Habit {
+    let habitID: Int
     let habit: String
     let howManyDays: Int
     let howManyTimesADay: Int
     let progress: Float
-    let didIt: Bool
+    let habitDone: Bool
     
     static func getHabitsList() -> [Habit] {
         [
-            Habit(habit: "Заниматься английским", howManyDays: 365, howManyTimesADay: 1, progress: 10, didIt: false),
-            Habit(habit: "Делать тело", howManyDays: 90, howManyTimesADay: 1, progress: 1, didIt: false),
-            Habit(habit: "Читать", howManyDays: 100, howManyTimesADay: 1, progress: 70, didIt: false)
+            Habit(
+                habitID: 1,
+                habit: "Заниматься английским",
+                howManyDays: 365,
+                howManyTimesADay: 1,
+                progress: 10,
+                habitDone: false
+            ),
+            Habit(
+                habitID: 1,
+                habit: "Делать тело", 
+                howManyDays: 90,
+                howManyTimesADay: 1,
+                progress: 1,
+                habitDone: false
+            ),
+            Habit(
+                habitID: 1,
+                habit: "Читать",
+                howManyDays: 120,
+                howManyTimesADay: 1,
+                progress: 70,
+                habitDone: true
+            )
         ]
     }
 }
 
 struct Pill {
+    let pillsID: Int
     let type: PillsType
     let pillName: String
     let dose: Int?
@@ -36,10 +59,12 @@ struct Pill {
         ? "Принять \(howManyDoses) \(type.rawValue) \(wayToEat.rawValue)"
         : "\(dose!) \(measureUnit!.rawValue), принять \(howManyDoses) \(type.rawValue) \(wayToEat.rawValue)"
     }
+    let done: Bool
     
     static func getPillsList() -> [Pill] {
         [
             Pill(
+                pillsID: 1,
                 type: .pill,
                 pillName: "Эутирокс",
                 dose: 100,
@@ -48,9 +73,11 @@ struct Pill {
                 howManyDays: 60,
                 timesADay: 1,
                 wayToEat: .duringEat,
-                image: "IMG_0880"
+                image: "IMG_0880",
+                done: false
             ),
             Pill(
+                pillsID: 2,
                 type: .drop,
                 pillName: "Витамин Д",
                 dose: nil,
@@ -59,9 +86,11 @@ struct Pill {
                 howManyDays: 30,
                 timesADay: 1,
                 wayToEat: .afterEat,
-                image: "IMG_0876"
+                image: "IMG_0876",
+                done: false
             ),
             Pill(
+                pillsID: 3,
                 type: .capsule,
                 pillName: "Урдокса",
                 dose: 2,
@@ -70,11 +99,13 @@ struct Pill {
                 howManyDays: 90,
                 timesADay: 2,
                 wayToEat: .beforeEat,
-                image: "IMG_0879"
+                image: "IMG_0879",
+                done: true
             )
         ]
     }
 }
+
 
 struct Task {
     let textOfTask: String

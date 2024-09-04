@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SwiftUI
 
 class DailyFocusViewController: UITableViewController {
     
@@ -58,29 +59,30 @@ class DailyFocusViewController: UITableViewController {
         case 0:
             let habitCell = tableView.dequeueReusableCell(withIdentifier: "habit", for: indexPath) as? HabitTableViewCell
             let habit = habitsList[indexPath.row]
-            if habit.didIt == false {
+            
+            if !habit.habitDone {
                 
-                habitCell!.leftTimesLabel.isHidden = true
-//                habitCell?.DoneImage.isHidden = true
+                habitCell?.leftToDo.isHidden = true
+                habitCell?.doneImage.isHidden = true
                 
                 habitCell?.habitLabel.text = habit.habit.uppercased()
                 habitCell?.howOftenADayHabitLabel.text = habit.howManyTimesADay.formatted()
                 habitCell?.habitProgressView.progress = habit.progress / 100
+                habitCell?.progressInPercent.isHidden = true
                 
             } else {
-                
-//                habitCell?.habitLabel.isHidden
-//                habitCell?.howOftenADayHabitLabel.isHidden
-//                habitCell?.habitProgressView.isHidden
-                
-//                habitCell?.habitLabel.text = habit.habit.uppercased()
-//                habitCell?.
-//                habitCell?.howOftenADayHabitLabel.text = habit.howManyTimesADay.formatted()
-                
+                habitCell?.habitLabel.text = habit.habit.uppercased()
+                let leftToDoDays = Float(habit.howManyDays) / 100 * habit.progress
+                habitCell?.leftToDo.text = "Ещё \(leftToDoDays.formatted()) дней" // TO DO: Добавить склонение слово "день"
+                habitCell?.doneImage.isHidden = false
+                habitCell?.tipLabel.isHidden = true
+                habitCell?.howOftenADayHabitLabel.isHidden = true
+                habitCell?.progressInPercent.text = "\(habit.progress.formatted())%"
+                habitCell?.habitProgressView.isHidden = true
                 
             }
             
-            return (habitCell)!
+            return habitCell!
             
         case 1:
             let pillCell = tableView.dequeueReusableCell(withIdentifier: "pill", for: indexPath)
@@ -89,12 +91,27 @@ class DailyFocusViewController: UITableViewController {
             
             content.text = pill.pillName
             content.textToSecondaryTextVerticalPadding = 5
-            content.secondaryText = pill.description
-            content.secondaryTextProperties.color = .systemGray
-            content.image = UIImage(named: pill.image)
-            content.imageProperties.maximumSize = CGSize(width: 20, height: 20)
+            
+            
+            if !pill.done {
+                content.image = UIImage(named: pill.image)
+                content.imageProperties.maximumSize = CGSize(width: 20, height: 20)
+                
+                content.secondaryText = pill.description
+                content.secondaryTextProperties.color = .systemGray
+            } else {
+                
+                content.secondaryText = "Принято"
+                content.secondaryTextProperties.color = .systemGreen
+                content.image = UIImage(named: pill.image)
+                content.imageProperties.maximumSize = CGSize(width: 20, height: 20)
+                
+                content.image = UIImage(systemName: "checkmark")
+                content.imageProperties.tintColor = .systemGreen
+            }
+            
             pillCell.contentConfiguration = content
-        
+            
             return pillCell
             
         default:
