@@ -80,7 +80,9 @@ class DailyFocusViewController: UITableViewController {
                 habitCell?.progressInPercent.text = "\(habit.progress.formatted())%"
                 habitCell?.habitProgressView.isHidden = true
                 
+                setupGradientView(cell: habitCell!, habit: habit)
             }
+            
             
             return habitCell!
             
@@ -108,6 +110,7 @@ class DailyFocusViewController: UITableViewController {
                 
                 content.image = UIImage(systemName: "checkmark")
                 content.imageProperties.tintColor = .systemGreen
+                
             }
             
             pillCell.contentConfiguration = content
@@ -138,6 +141,49 @@ class DailyFocusViewController: UITableViewController {
         }
     }
 
+    private func setupGradientView(cell: HabitTableViewCell, habit: Habit) {
+        let height = cell.frame.height // Height of the translucent gradient view
+        
+        lazy var gradientView: UIView = {
+               let view = UIView()
+               view.translatesAutoresizingMaskIntoConstraints = false // IMPORTANT IF YOU ARE USING CONSTRAINTS INSTEAD OF FRAMES
+               return view
+           }()
+        
+        cell.addSubview(gradientView)
+        cell.addSubview(cell.contentView)
+        
+        NSLayoutConstraint.activate([
+            gradientView.leadingAnchor.constraint(equalTo: cell.leadingAnchor),
+            gradientView.trailingAnchor.constraint(equalTo: cell.trailingAnchor),
+            gradientView.bottomAnchor.constraint(equalTo: cell.bottomAnchor),
+            gradientView.heightAnchor.constraint(equalToConstant: height)
+        ])
+
+        // Adding the gradient
+        let colorLeading =  UIColor.systemGreen
+//        let colorTrailing = UIColor.clear
+        let colorTrailing = UIColor.white
+        
+        let gradientLayer = CAGradientLayer()
+        gradientLayer.type = .axial
+        gradientLayer.colors = [colorLeading.cgColor, colorTrailing.cgColor]
+//        gradientLayer.locations = [0.0, 1.1]
+        
+        let percentInDouble = Double(habit.progress/100)
+//        gradientLayer.startPoint = CGPoint(x: 0, y: 0)
+//        gradientLayer.endPoint = CGPoint(x: percentInDouble, y: percentInDouble)
+        gradientLayer.startPoint = CGPoint(x: 0, y: 0)
+        gradientLayer.endPoint = CGPoint(x: percentInDouble, y: percentInDouble)
+        gradientLayer.frame = CGRect(
+            x: 0,
+            y: 0,
+            width: cell.frame.width,
+            height: cell.frame.height
+        )
+        gradientView.layer.insertSublayer(gradientLayer, at:0)
+        print(cell.frame)
+    }
 
     /*
     // Override to support conditional editing of the table view.
